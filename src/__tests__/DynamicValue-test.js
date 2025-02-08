@@ -37,6 +37,25 @@ export class TestDynamicValue extends UnitTest {
         this.assertTrue(false)
     }
 
+    @targets('evaluate')
+    @desc('tests aes ebc encryption')
+    testEvaluateAesEbcEncryption() {
+        const dv = this.__init()
+
+        dv.message = 'e10adc3949ba59abbe56e057f20f883e'
+        dv.msgEnc = 'Utf8'
+        dv.key = 'EY8WePvjM5GGwQzn'
+        dv.keyEnc = 'Utf8'
+        dv.mode = 'ECB'
+        dv.pad = 'Pkcs7'
+
+        const expected = 'AUHkSPhNLNE+Glv5Qp7lw10OtcVErtm8GC/knMwMhVeiKeA/JKS' +
+            'DtfY9dGd7jEpm'
+        const result = dv.evaluate()
+
+        this.assertEqual(expected, result)
+    }
+
     __init() {
         const dv = new ClassMock(new DynamicValue())
         return dv
